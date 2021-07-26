@@ -44,7 +44,7 @@
                     
 
                 <li data-toggle="collapse" data-target="#attendance" class="collapsed">
-                  <a href="#"><i class="fa fa-users fa-lg"></i> Attendance <span class="arrow"></span></a>
+                  <a href="#"><i class="far fa-id-badge"></i>Attendance <span class="arrow"></span></a>
                 </li>  
                 <ul class="sub-menu collapse" id="attendance">
                 <li>
@@ -69,12 +69,15 @@
 
 
               <li data-toggle="collapse" data-target="#payroll" class="collapsed">
-                  <a href="#"><i class="fa fa-users fa-lg"></i> Payroll <span class="arrow"></span></a>
+                  <a href="#"><i class="fas fa-rupee-sign"></i> Payroll <span class="arrow"></span></a>
                 </li>  
                 <ul class="sub-menu collapse" id="payroll">
 
                   <li>
-                    <a href="payrollmaster/payroll.php"><i class="fas fa-rupee-sign"></i> &nbsp;Salary </a>
+                    <a href="payrollmaster/payroll1.php"><i class="fas fa-rupee-sign"></i> &nbsp;Salary </a>
+                  </li>
+                  <li>
+                    <a href="payrollmaster/view-salary.php"><i class="fas fa-rupee-sign"></i> &nbsp;View Salary </a>
                   </li>
                   <li>
                     <a href="payrollmaster/full-time-payroll.php"><i class="fas fa-rupee-sign"></i> &nbsp;12 hours  salary </a>
@@ -86,10 +89,13 @@
                   <li>
                     <a href="payrollmaster/full-time-salary-print.php"><i class="fas fa-rupee-sign"></i> &nbsp;12 hours  salary Print </a>
                   </li>
+                  <li>
+                    <a href="payrollmaster/view-full-time-salary.php"><i class="fas fa-rupee-sign"></i> &nbsp;full time  View Salary </a>
+                  </li>
                 
                 </ul>
                 <li data-toggle="collapse" data-target="#advance" class="collapsed">
-                  <a href="#"><i class="fa fa-users fa-lg"></i> Advance <span class="arrow"></span></a>
+                  <a href="#"><i class="fas fa-rupee-sign"></i> Advance <span class="arrow"></span></a>
                 </li> 
                 <ul class="sub-menu collapse" id="advance">
                 <li>
@@ -111,7 +117,7 @@
 
 
                 <li data-toggle="collapse" data-target="#workassign" class="collapsed">
-                  <a href="#"><i class="fa fa-users fa-lg"></i> Work Assign <span class="arrow"></span></a>
+                  <a href="#"><i class="fas fa-plus-circle"></i> Work Assign <span class="arrow"></span></a>
                 </li> 
                 <ul class="sub-menu collapse" id="workassign">
                 <li>
@@ -129,10 +135,10 @@
                   </li>
                 </ul>
                 <li data-toggle="collapse" data-target="#new" class="collapsed">
-                    <a href="export-database.php"><i class="fas fa-rupee-sign"></i> &nbsp;Export </a>
+                    <a href="export-database.php"><i class="fas fa-file-export"></i> &nbsp;Export </a>
                   </li>
                   <li data-toggle="collapse" data-target="#new" class="collapsed">
-                    <a href="logout.php"><i class="fas fa-rupee-sign"></i> &nbsp;Logout </a>
+                    <a href="logout.php"><i class="fas fa-sign-out-alt"></i> &nbsp;Logout </a>
                   </li>
 
 <!-- 

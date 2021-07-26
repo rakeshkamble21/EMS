@@ -8,12 +8,13 @@ if($_SERVER['REQUEST_METHOD']=='POST')
       $name_array = $_POST["emp_name"];
       $per_salary_array = $_POST["salaries"];    
       $workhour_array = $_POST["total_time"];
-    //   $advance_array= $_POST["ad"];
-    //  $absent_array=$_POST['absent_day'];
-     // $salary_array=$_POST["salary"];
-    //   $advancetaken_array=$_POST["advance_taken"];
-   //  $givenadvance_array=$_POST["ad"];
-      $currentDateTime = $_GET['date'];//('Y-m-d');
+      
+      $salary_array=$_POST["salary"];
+    
+      $currentDateTime = $_GET["date"];
+      
+
+     
 
      //echo count($advancetaken_array);
       // $arr_atten=implode($att_array);
@@ -21,17 +22,19 @@ if($_SERVER['REQUEST_METHOD']=='POST')
       
     for ($i = 0; $i < count($name_array); $i++) {
 
-      //echo $salary_array[$i];
-
         // $interval = strtotime($intime_array[$i])->diff(strtotime($outtime_array[$i]));
 
         //  echo $salary_array[$i];
         //  echo $advance_array[$i];
+
+        // echo $currentDateTime.'<br>';
+        // echo $empid_array[$i].'<br>';
+        // echo $salary_array[$i].'<br>';
         
         // $nett_salary[]=$salary_array[$i]-$advance_array[$i];
-        // // echo $nett_salary[$i]."<br>";
+        // echo $nett_salary[$i]."<br>";
       
-        //     $remain_advance[]=$advancetaken_array[$i]-$advance_array[$i];
+          //  $remain_advance[]=$advancetaken_array[$i]-$advance_array[$i];
            
         
 
@@ -56,24 +59,24 @@ if($_SERVER['REQUEST_METHOD']=='POST')
         
         // $result=mysqli_query($db,$sql);
            //##############################Insert salary in salary table #################################
-           $stmt = $db->prepare("INSERT INTO full_time_salary(emp_id,emp_name,salary_perday,work_hour,date) VALUES(?,?,?,?,?)"); //Fetching all the records with input credentials
-           $stmt->bind_param("isiss",$empid_array [$i], $name_array[$i],$per_salary_array[$i],$workhour_array[$i],$currentDateTime); //Where s indicates string type. You can use i-integer, d-double
-           $stmt->execute();
-           $result = $stmt->affected_rows;
+        $stmt = $db->prepare("update salary set nett_salary=? where emp_id=? and date=?"); //Fetching all the records with input credentials
+        $stmt->bind_param("iis",$salary_array[$i],$empid_array [$i],$currentDateTime); //Where s indicates string type. You can use i-integer, d-double
+        $stmt->execute();
+        $result = $stmt->affected_rows;
 
 
         // $attendance= $db->prepare("INSERT INTO salary(emp_id,emp_name,salary_perday,absent_days,work_hour,advance_deduction,clean_salary,nett_salary,date) VALUES(?,?,?,?,?,?,?,?,?)");
         // $attendance->bind_param("isiisiiis",$empid_array [$i], $name_array[$i],$per_salary_array[$i],$absent_array[$i],$workhour_array[$i],$advance_array[$i],$salary_array[$i],$nett_salary[$i],$currentDateTime);
         // $attendance->execute();
 
-           //############################## Update advance in advance_master table #################################
-        // $stmt2 = $db->prepare("INSERT INTO `full_time_advance_master`(`emp_id`, `emp_name`, `advance_taken`, `deposit_advance`, `remain_advance`, `date`) VALUES (?,?,?,?,?,?)"); //Fetching all the records with input credentials
+        //    //############################## Update advance in advance_master table #################################
+        // $stmt2 = $db->prepare("INSERT INTO `advance_master`(`emp_id`, `emp_name`, `advance_taken`, `deposit_advance`, `remain_advance`, `date`) VALUES (?,?,?,?,?,?)"); //Fetching all the records with input credentials
         // $stmt2->bind_param("isiiis",$empid_array[$i],$name_array[$i],$advancetaken_array[$i],$givenadvance_array[$i],$remain_advance[$i],$currentDateTime); //Where s indicates string type. You can use i-integer, d-double
         // $stmt2->execute();
         // $result2 = $stmt2->affected_rows;
 
         //##############################Update advance in advance table#################################
-       // $sql1=mysqli_query($db,"update advance set deposit_advance='$advance_array[$i]',remain_advance='$remain_advance[$i]',advance_date_given=' $currentDateTime' where emp_id='$empid_array[$i]'");
+        //$sql1=mysqli_query($db,"update advance set deposit_advance='$advance_array[$i]',remain_advance='$remain_advance[$i]',advance_date_given=' $currentDateTime' where emp_id='$empid_array[$i]'");
         // $stmt2 -> close();
         // $db -> close();
         // if($result)
@@ -85,7 +88,7 @@ if($_SERVER['REQUEST_METHOD']=='POST')
         echo '<script type="text/javascript">';
         echo ' alert("Salary add successfull")';  //not showing an alert box.
         echo '</script>';
-        header('refresh:2; url="process-full-time-payroll.php');
+        header('refresh:2; url="process-payroll.php');
       }
       else
       {

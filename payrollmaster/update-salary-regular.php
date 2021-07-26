@@ -1,7 +1,4 @@
-<?php
-  
 
-?>
 
 <head>
     <link href="../css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
@@ -19,17 +16,17 @@
 <div class="row">
 <div class="col-md-2"></div>
 <div class="col-md-10">
-<h3 style="text-align:center;margin-top:20px">Update Work Assign</h3>
+<h3 style="text-align:center;margin-top:20px">Update Emloyee payroll perday</h3>
 <form action="" method="post">
 <table class="table table-bordered" style="margin-top:20px">
         <thead>
           <tr>
             <th scope="col">Emp id</th>
             <th scope="col">Employee Name</th>
-            <th scope="col">Work description</th>
-          
-            <th scope="col">Work done</th>
-         
+            <th scope="col">Salary (perday)</th>
+            <!-- <th scope="col">Work Hour</th> -->
+            <th scope="col">Date</th>
+
             <!-- <th scope="col">Total Hour</th> -->
           </tr>
         </thead>
@@ -38,35 +35,33 @@
 
         <?php
                 require '../connection.php';
-            //     $ids=$_GET["id"];
-             global $date;
-            //     $pasdate=$_GET["date"];
-            // echo $pasdate;
-            $id=$_GET['id'];
-            $date=$_GET['date'];
-           // echo $date;
-                try
-                    {
-                        $sql = "SELECT * FROM work_assign_master where emp_id=? and date=?";
-                        $stmt = $db->prepare($sql); 
-                        $stmt->bind_param("is", $id,$date);
-                        $stmt->execute();
-                        $result = $stmt->get_result();
-                        $row = $result->fetch_assoc();
-                        //echo $row['emp_id'];         
+                $ids=$_GET["id"];
+             $name=$_GET['name'];
+             $salary=$_GET['salary'];
+                $pasdate=$_GET["date"];
+           // echo $pasdate;
+             
                          ?>
                          <tr>
-                        <td><input type="text"   name="empno" readonly class="form-control" value="<?php echo $row['emp_id'];?>"/></td>
-                        <td> <input type="text"readonly name="emp_name" class="form-control" placeholder="Enter Employee address*" value="<?php echo $row['emp_name'] ?>"/></td>
-                      
-                        <td><input type="text" name="work_description" class="form-control" value="<?php echo $row['work_description'] ?>" ></td> 
-                        <td><input type="text" name="work_done" class="form-control" value="<?php echo $row['work_done'] ?>" ></td>
+                        <td><input type="text"  name="empno" readonly class="form-control" value="<?php echo $ids;?>"/></td>
+                        <td> <input type="text"readonly name="emp_name" class="form-control" placeholder="Enter Employee address*" value="<?php echo $name ?>"/></td>
+                       
                         
-                        </td> 
-                        <td>
-                        <input type="hidden" name="date" class="form-control" value="<?php echo $row['date'] ?>" >
+                       
+                      <td>
+                        <input type="text" name="salary" class="form-control" placeholder="Enter Employee address*" value="<?php echo $salary ?>"/>
+
+                        </td>
+                          
+                        
+                       
+
+                        <td style="width:15%">
+                        <input type="text" readonly name="date" class="form-control" placeholder="Enter Employee address*" value="<?php echo $pasdate ?>"/>
                         
                         </td>
+                        
+                    
                     </tr>     
                     
 
@@ -76,21 +71,16 @@
       </table>
      
     <br/>
-    <input type="submit" class="btn btn-success" name="submit" value="Update" />
+    <input type="submit" class="btn btn-success" name="submit" value="Update Salary" />
     <a href="../home.php"><button class="btn btn-primary" type="button">Home</button></a>
-    <a href="view-work-assignment.php"><button class="btn btn-danger" type="button">Back</button></a>
+    <a href="process-payroll.php"><button class="btn btn-danger" type="button">Back</button></a>
     <button class="btn btn-info" type="button" onclick="location.reload();">Refresh Page</button>
 </form>
 </div>
 </div>
 </div>
 <?php
-}
 
-catch (PDOException $e) 
-{
-  echo $e->getMessage();
-}
 
 global $attens;
 
@@ -98,11 +88,10 @@ if($_SERVER['REQUEST_METHOD']=='POST')
 {
   
       $name = $_POST["emp_name"]; 
-      $workdes= $_POST["work_description"];
-      $emp_id = $_POST["empno"];    
-      $work_done = $_POST["work_done"];
+      $salary= $_POST["salary"];
+      $empno = $_POST["empno"];    
       $date = $_POST["date"];
-
+      
       
       //$updated = date('Y-m-d');
       // $arr_atten=implode($att_array);
@@ -119,23 +108,21 @@ if($_SERVER['REQUEST_METHOD']=='POST')
         // echo  " ".$workdone_array;
         // echo  " ".$workhour_array;
         // echo "".$att_array;
-        echo $date;
-        
-         $attendance = $db->prepare("update work_assign_master set work_description=?,work_done=? where emp_id=? and date=?");
-         $attendance->bind_param("siis",$workdes,$work_done,$emp_id,$date);
+         $attendance = $db->prepare("update salary set salary_perday=? where emp_id=? and date=?");
+         $attendance->bind_param("iis",$salary,$empno,$date);
          $attendance->execute();
          $result=$attendance->affected_rows;
          if ($result>0) 
          {
           echo '<script type="text/javascript">';
-          echo ' alert("Work assign  updated successfull")';  //not showing an alert box.
+          echo ' alert("Salary updated successfull")';  //not showing an alert box.
           echo '</script>';
-         header('Refresh: 1;view-work-assignment.php'); 
+         //header('Refresh: 1;view-attendance.php'); 
         }
         else
         {
           echo '<script type="text/javascript">';
-          echo ' alert("Work assign not updated")';  //not showing an alert box.
+          echo ' alert("Salary not updated")';  //not showing an alert box.
           echo '</script>';
           //header('Refresh: 1;view-attendance.php'); 
         }

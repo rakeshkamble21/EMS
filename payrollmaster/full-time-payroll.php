@@ -17,7 +17,7 @@
 <div class="row">
 <div class="col-md-2"></div>
 <div class="col-md-10">
-<h3 style="text-align:center;margin-top:20px">12 hours Employee Payroll</h3>
+<h3 style="text-align:center;margin-top:20px">12 hours Employee Payroll perday</h3>
 
 
 <table class="table table-bordered" style="margin-top:20px">
@@ -28,10 +28,10 @@
                                 <input type="date"  name="from" class="form-control"/>
                             </div>  
 
-                            <div class="form-group">
+                            <!-- <div class="form-group">
                             <label for="todate">Select the date</label>  
                                 <input type="date"  name="to" class="form-control"/>
-                            </div>       
+                            </div>        -->
                             <!-- <div class="form-group">
                                             <select class="form-control"  name="presenty_status" >
                                                 <option value="select" >Select attendance status</option>
@@ -45,7 +45,7 @@
             
             <input type="submit" onclick="submitForm('full-time-payroll.php')"  class="btn btn-danger" value="search"/>&nbsp;&nbsp;
             <a href="../home.php"><input type="button" class="btn btn-danger" name="home" value="back" /></a>&nbsp;&nbsp;
-            <a href="full-time-salary-print.php"><input type="button" class="btn btn-success" name="home" value="salary print" /></a>&nbsp;&nbsp;
+            <a href="process-full-time-payroll.php"> <input type="button" class="btn btn-primary" value="next"></a>&nbsp;&nbsp;
             <button class="btn btn-info" type="button" onclick="location.reload();">Refresh Page</button>
 
 
@@ -55,14 +55,14 @@
           <tr>
             <th scope="col">Emp id</th>
             <th scope="col" >Employee Name</th>
-            <th scope="col">Salary</th>
+            <th scope="col">Enter Salary(perday)</th>
             <!-- <th scope="col">Work description</th> -->
             <!-- <th scope="col">Work done</th> -->
-            <th scope="col">Absent Days</th> 
+            <!-- <th scope="col">Absent Days</th> 
             <th scope="col">Work Hour</th>
             <th scope="col">Advance taken</th>
-            <th scope="col">Enter Advance reduction</th>
-            <th scope="col">Salary</th>
+            <th scope="col">Enter Advance reduction</th> -->
+            <th scope="col">Time</th>
           </tr>
           </thead>
             
@@ -88,15 +88,15 @@
                       // fix it.
                     }
 
-                    $todate = strtotime($_POST['to']);
-                    if ( $todate ) {
-                      $to_date = date('Y-m-d', $todate );
+                    // $todate = strtotime($_POST['to']);
+                    // if ( $todate ) {
+                    //   $to_date = date('Y-m-d', $todate );
                     
-                    } else {
-                       echo 'Invalid Date: ' . $_POST['to'];
-                      // fix it.
-                    }
-                    echo $from_date." "."To". " ". $to_date;
+                    // } else {
+                    //    echo 'Invalid Date: ' . $_POST['to'];
+                    //   // fix it.
+                    // }
+                    // echo $from_date." "."To". " ". $to_date;
                     try
                     {
                         global $cnt;
@@ -104,15 +104,16 @@
                         //$sql = "SELECT DISTINCT emp_id,emp_name,attendance FROM attendance where date between ? and ?";
                        // $sql="select emp_name,emp_id ,count(case when attendance ='Absent' then 1 end) as absent_count ,count(case when attendance ='Present' then 1 end) as present_count ,count(distinct date) as Tot_count from attendance where date between ? and ? group by emp_id";
                      // present and absent query  $sql="select employee.salary, attendance.emp_name,attendance.emp_id ,count(case when attendance.attendance ='Absent' then 1 end) as absent_count ,count(case when attendance.attendance ='Present' then 1 end) as present_count ,count(distinct date) as Tot_count from attendance JOIN employee ON employee.emp_id=attendance.emp_id where attendance.date between ? and ? group by attendance.emp_id"; 
-                        $sql="select full_time_emp.salary,full_time_attendance.work_hours,full_time_attendance.emp_name,full_time_attendance.emp_id ,count(case when full_time_attendance.attendance ='Absent' then 1 end) as absent_count,SEC_TO_TIME(SUM(TIME_TO_SEC(work_hours))) AS TotalTime from full_time_attendance JOIN full_time_emp ON full_time_emp.emp_id=full_time_attendance.emp_id where full_time_attendance.date between ? and ? group by full_time_attendance.emp_id";
+                        $sql="select full_time_emp.salary,full_time_attendance.date,full_time_attendance.work_hours,full_time_attendance.emp_name,full_time_attendance.emp_id ,count(case when full_time_attendance.attendance ='Absent' then 1 end) as absent_count,SEC_TO_TIME(SUM(TIME_TO_SEC(work_hours))) AS TotalTime from full_time_attendance JOIN full_time_emp ON full_time_emp.emp_id=full_time_attendance.emp_id where full_time_attendance.date=? group by full_time_attendance.emp_id";
                         $stmt = $db->prepare($sql);
-                        $stmt->bind_param("ss",$from_date,$to_date);
+                        $stmt->bind_param("s",$from_date);
                         $stmt->execute();
                         $result = $stmt->get_result();
                         while ($row = $result->fetch_assoc())
                         {
                           
                             $id=$row['emp_id'];
+                            $date=$row['date'];
                        
                           // $stmt1 = $db->prepare($sql2);
                           // // $stmt1->bind_param("i",$id);
@@ -127,16 +128,16 @@
                          <tr>
                          <td><input type="text" readonly value="<?php echo $row['emp_id'] ?>" name="emp_no[]" class="form-control"></td>
                         <td style="width:20%"> <input type="text" readonly value="<?php echo $row['emp_name'] ?>" name="emp_name[]" class="form-control"></td>
-                        <td><input type="text" readonly value="<?php echo $row['salary'] ?>" name="salaries[]" class="form-control"></td>
+                        <td><input type="text" value="" name="salaries[]" class="form-control"></td>
                         <!-- <td>
                           <input type="text" class="form-control" readonly name="work_description[]" value="<?php echo $row['work_description']; ?>"></td>
                        </td> -->
                           <!-- <td><input type="text" class="form-control" readonly name="work_done[]" value="<?php echo $row['totalwork']; ?>"> </td> -->
-                        <td><input type="text" readonly value="<?php echo $row['absent_count'] ?>" name="absent_day[]" class="form-control"> </td>
-                        <td>
-                        <input type="text" readonly value="<?php echo $row['TotalTime'];?>" name="total_time[]" class="form-control">
+                        <!-- <td><input type="text" readonly value="<?php echo $row['absent_count'] ?>" name="absent_day[]" class="form-control"> </td> -->
+                        <td style="width:10%">
+                        <input type="text" readonly value="<?php echo $row['work_hours'];?>" name="total_time[]" class="form-control">
                         </td>
-                        <td>
+                        <!-- <td>
                             <?php
                               $result1=mysqli_query($db,"SELECT full_time_emp_advance.remain_advance,full_time_attendance.emp_id FROM full_time_attendance JOIN full_time_emp_advance WHERE full_time_emp_advance.emp_id=full_time_attendance.emp_id and full_time_emp_advance.emp_id='$id' GROUP BY full_time_attendance.emp_id");
                               while($row1 = $result1->fetch_assoc())
@@ -156,17 +157,17 @@
                         </td>
                         <td><input type="text" class="form-control" value="0" name="ad[]"></td>
                         <td><?php 
-                          $hourstomin=  12*60;
-                         $permin=($row['salary']/$hourstomin);
-                        $perminrupee= round($permin,2);
-                        $workpay= $row['TotalTime'];
-                       // echo $perminrupee;
-                        $time = explode(':', $workpay);
-                        $minute=($time[0]*60) + ($time[1]) + ($time[2]/60);
+                    //       $hourstomin=  12*60;
+                    //      $permin=($row['salary']/$hourstomin);
+                    //     $perminrupee= round($permin,2);
+                    //     $workpay= $row['TotalTime'];
+                    //    // echo $perminrupee;
+                    //     $time = explode(':', $workpay);
+                    //     $minute=($time[0]*60) + ($time[1]) + ($time[2]/60);
                         //echo $minute;
                         ?>
                             <input type="text" readonly value="<?php echo round($minute*$perminrupee);?>" name="salary[]" class="form-control">
-                        </td>
+                        </td> -->
 
 
 
@@ -204,8 +205,8 @@
       </table>
       <!-- <iframe id="txtArea1" style="display:none"></iframe>
       <button id="btnExport" type="button" class="btn btn-primary" onclick="fnExcelReport();"> EXPORT </button> -->
-      <input type="button" onclick="submitForm('save-full-time-payroll.php')" name="update" class="btn btn-success" value="Save">
-     <a href="salary-print.php"> <input type="button" class="btn btn-inof" value="next"></a>
+      <input type="button" onclick="submitForm('save-full-time-payroll.php?date=<?php echo $date?>')" name="update" class="btn btn-success" value="Save">
+     <a href="process-full-time-payroll.php"> <input type="button" class="btn btn-inof" value="next"></a>
   </form>
    
     <!-- <input type="hidden" name="file_content" id="file_content" />

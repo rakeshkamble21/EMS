@@ -17,7 +17,7 @@
 <div class="row">
 <div class="col-md-2"></div>
 <div class="col-md-10">
-<h3 style="text-align:center;margin-top:20px">Employee Salary</h3>
+<h3 style="text-align:center;margin-top:20px">Employee Salary Monthly</h3>
 
 
 <table class="table table-bordered" style="margin-top:20px">

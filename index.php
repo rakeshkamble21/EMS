@@ -10,7 +10,7 @@
     <script src="js/all.js"></script>
     <script src="js/fullscreen.js"></script>
 </head>
-<body onload="script();" id="myvideo">
+<body>
 <section class="login-block">
     <div class="container"  >
 	<div class="row">
@@ -132,17 +132,3 @@
      //}
 
 ?>
-
-<script>
-function script()
-{
-  var elem=document.getElementById("myvideo");
-  if (elem.requestFullscreen) {
-    elem.requestFullscreen();
-  } else if (elem.webkitRequestFullscreen) { /* Safari */
-    elem.webkitRequestFullscreen();
-  } else if (elem.msRequestFullscreen) { /* IE11 */
-    elem.msRequestFullscreen();
-  }
-}
-</script>

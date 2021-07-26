@@ -39,7 +39,7 @@
             <th scope="col">Out Time</th>
             <th scope="col">Work Hours</th>
             <th scope="col">Date</th>
-            <th scope="col">Action</th>
+            <!-- <th scope="col">Action</th> -->
           </tr>
         </thead>
             
@@ -88,13 +88,13 @@
                         <td><input type="text" readonly name="it[]" class="form-control" value="<?php echo $row['it'];?>"></td>
                         <td><input type="text"readonly  name="ot[]" class="form-control" value="<?php echo $row['ot'];?>"></td>
                         <td><input type="text" readonly name="hours[]" class="form-control" value="<?php echo $row['hours'];?>"></td> 
-                        <td><input type="text"readonly  name="date[]" class="form-control" value="<?php echo $row['date'];?>"></td>
+                        <td style="width:15%"><input type="text"readonly  name="date[]" class="form-control" value="<?php echo $row['date'];?>"></td>
                         
-                        <td>
+                        <!-- <td>
                         <!-- <button type="button" class="btn btn-primary" ><i class="far fa-eye"></i></button> -->
                         <!-- <a href="update-attendance.php?id=<?php echo $row['emp_id'];?> & date=<?php echo $row['date'];?> " data-placement="top" data-toggle="tooltip" title="Edit"><button type="button" class="btn btn-success" data-title="Edit"><i class="fas fa-edit"></i></button></a>               
                         <a href="delete-attendance.php?id=<?php echo $row['emp_id'];?>" data-placement="top" data-toggle="tooltip" title="Delete"><button type="button" class="btn btn-danger"><i class="fas fa-trash-alt"></i></button><a> -->
-                        </td>
+                        </td> -->
                     </tr>     
                     
                <?php    

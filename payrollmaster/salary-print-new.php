@@ -17,7 +17,7 @@
 <div class="row">
 <div class="col-md-2"></div>
 <div class="col-md-10">
-<h3 style="text-align:center;margin-top:20px">12 hours Employee Salary monthly</h3>
+<h3 style="text-align:center;margin-top:20px">Employee Salary Monthly</h3>
 
 
 <table class="table table-bordered" style="margin-top:20px">
@@ -45,7 +45,7 @@
             
             <input type="submit"   class="btn btn-danger" value="search"/>&nbsp;&nbsp;
             <a href="../home.php"><input type="button" class="btn btn-danger" name="home" value="Home" /></a>&nbsp;&nbsp;
-            <a href="full-time-monthly-salary.php"><input type="button" class="btn btn-danger" name="home" value="back" /></a>&nbsp;&nbsp;
+            <a href="montly-payment.php"><input type="button" class="btn btn-danger" name="home" value="back" /></a>&nbsp;&nbsp;
             <button class="btn btn-info" type="button" onclick="location.reload();">Refresh Page</button>
 
 
@@ -106,7 +106,7 @@
                         //$sql = "SELECT DISTINCT emp_id,emp_name,attendance FROM attendance where date between ? and ?";
                        // $sql="select emp_name,emp_id ,count(case when attendance ='Absent' then 1 end) as absent_count ,count(case when attendance ='Present' then 1 end) as present_count ,count(distinct date) as Tot_count from attendance where date between ? and ? group by emp_id";
                      // present and absent query  $sql="select employee.salary, attendance.emp_name,attendance.emp_id ,count(case when attendance.attendance ='Absent' then 1 end) as absent_count ,count(case when attendance.attendance ='Present' then 1 end) as present_count ,count(distinct date) as Tot_count from attendance JOIN employee ON employee.emp_id=attendance.emp_id where attendance.date between ? and ? group by attendance.emp_id"; 
-                        $sql="select * from full_time_monthly_salary where date=? group by emp_id";
+                        $sql="select * from monthly_salary where date=?";
                         $stmt = $db->prepare($sql);
                         $stmt->bind_param("s",$from_date);
                         $stmt->execute();

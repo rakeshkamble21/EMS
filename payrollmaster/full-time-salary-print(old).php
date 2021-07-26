@@ -17,7 +17,7 @@
 <div class="row">
 <div class="col-md-2"></div>
 <div class="col-md-10">
-<h3 style="text-align:center;margin-top:20px">12 hours Employee Salary monthly</h3>
+<h3 style="text-align:center;margin-top:20px">12 hours Employee Salary</h3>
 
 
 <table class="table table-bordered" style="margin-top:20px">
@@ -43,9 +43,8 @@
                 
             </div>
             
-            <input type="submit"   class="btn btn-danger" value="search"/>&nbsp;&nbsp;
-            <a href="../home.php"><input type="button" class="btn btn-danger" name="home" value="Home" /></a>&nbsp;&nbsp;
-            <a href="full-time-monthly-salary.php"><input type="button" class="btn btn-danger" name="home" value="back" /></a>&nbsp;&nbsp;
+            <input type="submit"  class="btn btn-success" value="search"/>&nbsp;&nbsp;
+            <a href="../home.php"><input type="button" class="btn btn-danger" name="home" value="back" /></a>&nbsp;&nbsp;
             <button class="btn btn-info" type="button" onclick="location.reload();">Refresh Page</button>
 
 
@@ -55,7 +54,7 @@
           <tr>
             <th scope="col">Emp id</th>
             <th scope="col" >Employee Name</th>
-            <!-- <th scope="col">Salary</th> -->
+            <th scope="col">Salary</th>
             <!-- <th scope="col">Present Days</th>
             <th scope="col">Half Days</th>-->
             <th scope="col">Absent Days</th> 
@@ -106,7 +105,7 @@
                         //$sql = "SELECT DISTINCT emp_id,emp_name,attendance FROM attendance where date between ? and ?";
                        // $sql="select emp_name,emp_id ,count(case when attendance ='Absent' then 1 end) as absent_count ,count(case when attendance ='Present' then 1 end) as present_count ,count(distinct date) as Tot_count from attendance where date between ? and ? group by emp_id";
                      // present and absent query  $sql="select employee.salary, attendance.emp_name,attendance.emp_id ,count(case when attendance.attendance ='Absent' then 1 end) as absent_count ,count(case when attendance.attendance ='Present' then 1 end) as present_count ,count(distinct date) as Tot_count from attendance JOIN employee ON employee.emp_id=attendance.emp_id where attendance.date between ? and ? group by attendance.emp_id"; 
-                        $sql="select * from full_time_monthly_salary where date=? group by emp_id";
+                        $sql="select * from full_time_salary where date=? group by emp_id";
                         $stmt = $db->prepare($sql);
                         $stmt->bind_param("s",$from_date);
                         $stmt->execute();
@@ -130,7 +129,7 @@
                          <tr>
                          <td><?php echo $row['emp_id'] ?></td>
                         <td style="width:20%"> <?php echo $row['emp_name'] ?></td>
-                        <!-- <td><?php echo $row['salary_perday'] ?></td> -->
+                        <td><?php echo $row['salary_perday'] ?></td>
                         <!-- <td><?php echo $row['present_count']; ?> </td>
                         <td><?php echo $row['halfday_count']; ?> </td> -->
                         <td><?php echo $row['absent_days'] ?></td>
@@ -139,7 +138,7 @@
                         </td>
                         <td>
                             <?php
-                              $result1=mysqli_query($db,"SELECT advance.advance,advance.remain_advance,attendance.emp_id FROM attendance JOIN advance WHERE advance.emp_id=attendance.emp_id and advance.emp_id='$id' GROUP BY attendance.emp_id");
+                              $result1=mysqli_query($db,"SELECT full_time_emp_advance.advance,full_time_emp_advance.remain_advance,full_time_attendance.emp_id FROM full_time_attendance JOIN full_time_emp_advance WHERE full_time_emp_advance.emp_id=full_time_attendance.emp_id and full_time_emp_advance.emp_id='$id' GROUP BY full_time_attendance.emp_id");
                               while($row1 = $result1->fetch_assoc())
                               {
                                 
@@ -196,8 +195,8 @@
       <iframe id="txtArea1" style="display:none"></iframe>
       <button id="btnExport" type="button" class="btn btn-primary" onclick="fnExcelReport();"> EXPORT </button>
       <!-- <input type="button" onclick="submitForm('save-payroll.php')" name="update" class="btn btn-success" value="Save"> -->
-     <a href="home.php"> <input type="button" class="btn btn-success" value="Home"></a>
-     <a href="payroll.php"> <input type="button" class="btn btn-info" value="Back"></a>
+     <a href="../home.php"> <input type="button" class="btn btn-success" value="Home"></a>
+     <a href="full-time-payroll.php"> <input type="button" class="btn btn-info" value="Back"></a>
   </form>
    
     <!-- <input type="hidden" name="file_content" id="file_content" />
